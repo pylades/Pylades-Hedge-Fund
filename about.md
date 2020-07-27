@@ -14,3 +14,5 @@ permalink: /about
 - Andrea Zuccarini - Analyst (Tech)
 - Florent Moulin - Product Manager (Derivatives)
 - Julien Thevenard - Business (Derivatives)
+
+Shoot us a message on Twitter to join as a manager. 
