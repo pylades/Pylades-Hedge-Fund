@@ -7,3 +7,7 @@
 ## Run repo
 
 `bundle exec jekyll serve`
+
+## Launch
+
+Temp endpoint: https://bneiluj.github.io/Black-Pool-Finance/
