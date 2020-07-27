@@ -15,3 +15,12 @@ plugins:
   - jekyll-seo-tag
 
 remote_theme: b2a3e8/jekyll-theme-console
+
+header_pages:
+  - index.md
+  - participate.md
+  - DFFPR.md
+  - about.md
+
+style: dark # dark (default), light or hacker
+listen_for_clients_preferred_style: true # false (default) or true
