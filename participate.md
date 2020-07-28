@@ -4,7 +4,7 @@ layout: page
 permalink: /participate
 ---
 
-# How to participate
+# How to Participate
 
 Manager: Min 5 ETH
 LP: Min 10 ETH
