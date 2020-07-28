@@ -12,7 +12,7 @@ permalink: /about
 - Ben Lescroart - Analyst (Market)
 - Leopold Joy - Analyst (Tech)
 - Andrea Zuccarini - Analyst (Tech)
-- Florent Moulin - Product Manager (Derivatives)
+- Florent Moulin - Product manager (Derivatives)
 - Julien Thevenard - Business (Derivatives)
 
 Shoot us a message on Twitter to join as a manager. 
