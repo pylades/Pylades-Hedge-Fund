@@ -4,7 +4,7 @@ layout: home
 permalink: /
 ---
 
-# Black Pool
+<img src="{{site.baseurl}}/assets/blackpool.svg" max-width="100">
 
 Blackpool is a DAO that participates in the SoRare ecosystem, running a data driven strategy to build portfolio of player cards. Blackpool will engage in auctions, in secondary market trades and in SO5 tournaments.
 

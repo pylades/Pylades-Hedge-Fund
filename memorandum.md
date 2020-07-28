@@ -21,3 +21,16 @@ Loans, lotteries and other exotic trading strategies and solutions proposed by B
 Composed of people from all backgrounds, we believe that approach should reflect the spectrum of skills Blackpool has to offer. Therefore, Blackpool’s implementation of its strategy will be based on rigorous data analytics done via machine learning combined with years of expertise in the football world.  Blackpool will therefore be able to track data such as live news feed from prominent sports journalists, injuries, contract extensions, or other market rumours and act accordingly.
 
 While Blackpool’s strategy is clearly to be a dominant figure into the transfer market, our decision-making will always be done in respect of regulations. BlackPool’s vision is to provide value to SoRare and so will not play against any potential Decentralised Financial Fair Play Regulations (DFFPR). BlackPool’s core values are still: improve the economic and financial capabilities of SoRare fantasy football managers.
+
+## Decentralized Financial Fair Play Regulations
+
+Faced by serious and worsening financial conditions in the NFT world, Blackpool's Executive Board of Directors unanimously approved a Decentralised Financial Fair Play concept for the game's well-being in June 2020. The concept, developed and supported by the entire gaming family, recognises the need for world-wide action to restrict some of the worst excesses of the game. Its fundamental principles and objectives are:
+
+• to improve the economic and financial capability of the clubs, increasing their transparency and credibility;
+• to place the necessary importance on the protection of creditors and to ensure that clubs settle their liabilities with employees, social/tax authorities and other clubs punctually;
+• to introduce more discipline and rationality in club football finances;
+• to encourage clubs to operate on the basis of their own revenues;
+• to encourage responsible spending for the long-term benefit of football;
+• to protect the long-term viability and sustainability of its stakeholders.
+
+**(Those principles are fantasy principles and so do not have legally binding character)**

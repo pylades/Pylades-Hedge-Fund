@@ -18,9 +18,8 @@ remote_theme: b2a3e8/jekyll-theme-console
 
 header_pages:
   - index.md
-  - participate.md
   - memorandum.md
-  - DFFPR.md
+  - participate.md
   - about.md
 
 style: dark # dark (default), light or hacker
