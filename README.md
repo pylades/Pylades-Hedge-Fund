@@ -10,4 +10,4 @@
 
 ## Launch
 
-Temp endpoint: https://bneiluj.github.io/BlackPool-ui
+Temp endpoint: https://blackpool-finance.github.io/BlackPool-ui/
