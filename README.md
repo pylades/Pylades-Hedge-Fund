@@ -1,4 +1,4 @@
-# Black Pool
+# BlackPool-ui
 
 ## Installation
 
