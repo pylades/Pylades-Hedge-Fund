@@ -6,6 +6,12 @@ permalink: /
 
 # Black Pool
 
-BlackPool aims to become a leader in providing financial derivatives in digital sports marketplaces such as asset valuation index, leasing, insurance mechanism and more, starting with SoRare, the leading blockchain footfall fantasy game.
+Blackpool is a DAO that participates in the SoRare ecosystem, running a data driven strategy to build portfolio of player cards. Blackpool will engage in auctions, in secondary market trades and in SO5 tournaments.
 
-# Bots
+Blackpool intends to generate cashflows and accrue value for the DAO by:
+
+- taking arbitrage opportunities between primary and secondary markets
+- loaning out a collection of cards to other managers
+- buying and selling cards based on player news
+- scouting young talent and buying cards early
+- competing in SO5 tournaments
