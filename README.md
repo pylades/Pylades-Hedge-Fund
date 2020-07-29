@@ -4,6 +4,8 @@
 
 `gem install jekyll bundler`
 
+Run `bundle install`
+
 ## Run repo
 
 `bundle exec jekyll serve`
