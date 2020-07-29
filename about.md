@@ -11,6 +11,5 @@ contact@blackpool.finance
 
 # Investors
 
-Fabric VC 
+Fabric VC
 Stake Capital 
-
