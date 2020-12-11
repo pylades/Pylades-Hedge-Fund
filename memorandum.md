@@ -4,26 +4,30 @@ layout: page
 permalink: /memorandum
 ---
 
-BlackPool is the first decentralised autonomous organisation (DAO) built solely for digital sport trading. 
-As the first in its field, BlackPool will lead the way in providing financial derivatives to the digital sports marketplace, by offering services such as asset valuation indices, leasing, insurance mechanisms, and more.
+# Memorandum
 
-BlackPool will begin our operations in the SoRare fantasy football system, where a diverse strategy will maximise shareholder returns, while benefiting the whole SoRare ecosystem.
+BlackPool is the first fund operating exclusively within the non-fungible tokens (NFT) space: from sports cards to game items to digital art.<br>
 
-This will include scouting for new and upcoming athletes, investing in star players and managers, and being an active player in the transfer market.
+BlackPool finances active specialist pools of capital managed by engaged individuals on a selection of growing NFT platforms including, but not limited to:<br>
 
-This strategy could be compared to that of Chelsea FC, where Roman Abramovich invested over 1 billion pounds in purchasing valuable players in order to loan them to other teams. From a business perspective, his strategy has proven to be incredibly successful. The loan system benefits not only the loanee, but also the parent and recipient clubs.
+-   A Sorare team competing in the SO5 fantasy league
+-   A set of Axies playing to earn SLPs in Axie Infinity’s game arena
+-   A set of Decentraland parcels fully built out to generate throughput
+-   An actively managed collection of digital art on SuperRare<br>
 
-In the world of fantasy football NFTs, the best cards are often the scarcest ones on the market. These can only be obtained by paying a high price, or by winning them as rewards, which would require already having great players on your team. The average spend of SoRare users is high (several $ETH), and the top 25 users own approximately half of the current global cards market cap, which currently stands at around $1 million, according to SorareData.com.
+BlackPool aims to become a leading provider of financial derivatives in digital asset marketplaces, including asset valuation indexes, insurance mechanisms and actively managed strategies.<br>
 
-As a strong advocate of decentralisation, BlackPool aims to provide managers with the tools they need to succeed in the market by offering data-driven strategies which will maximise their profits and help them spot opportunities for arbitrage.
+Stemming from DeFi origins, BlackPool’s long term goal is to provide democratised access to the scarcest non-fungible assets, that users might individually not be able to buy themselves. While BlackPool is currently financed solely by internal capital, we expect to open up an allocation to liquidity providers in the future.<br>
 
-BlackPool will level the playing field through loans, lotteries, and other in-depth trading strategies and solutions. This will benefit the entire ecosystem, as every member will have increased access to rarer, higher quality players, which will in turn increase supply distribution and encourage new users to join the game.
+Blackpool will decentralise its current operation through a DAO mechanism, where access and activity of BlackPools’ non-fungible assets will be decided via the BlackPool DAO. New features will be announced in the coming weeks that will help us progress toward this goal.<br>
 
-BlackPool’s strategies will be based on our long-term passion for football, combining professional data analytics and machine learning to provide the best returns for our users.
+**Transparency & Fair Play**
+<br>BlackPool commits to a high level of transparency on the capital flows that happen on-chain and will always keep a clear record of NFT platforms / managed pools it finances.<br>
 
-This combination of skills and knowledge means BlackPool will be able to track live data from prominent sports journalists, and use information on injuries, contract extensions and player performance to our advantage.
+BlackPool will disclose existing investments in underlying NFT platforms where they might overlap with our strategies.<br>
 
-BlackPool’s vision is to provide value to SoRare and therefore will not play against any potential Decentralised Financial Fair Play Regulations (DFFPR). 
+While the digital assets BlackPool holds are always fully permissionless, BlackPool will always abide by the rules of each NFT platform when using its assets.<br>
 
-BlackPool’s core values will remain: To improve the economic and financial capabilities of SoRare fantasy football managers.  
+Game on.
+ 
 
