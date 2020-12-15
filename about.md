@@ -11,3 +11,9 @@ We are a team of Portfolio Managers, Traders and Analysts.
 
 Fabric VC
 Stake Capital
+
+# Follow us
+
+Twitter:@BlackpoolHQ
+Telegram:http://t.me/BlackpoolHQ
+Medium: https://blackpool.medium.com/
