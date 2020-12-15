@@ -14,6 +14,6 @@ Stake Capital
 
 # Follow us
 
-Twitter:@BlackpoolHQ
-Telegram:http://t.me/BlackpoolHQ
+Twitter: @BlackpoolHQ
+Telegram: http://t.me/BlackpoolHQ
 Medium: https://blackpool.medium.com/
