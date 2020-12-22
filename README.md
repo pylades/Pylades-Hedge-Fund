@@ -1,15 +1,17 @@
-# BlackPool-ui
+# BlackPool Finance - Client
 
-## Installation
+### Getting started 🚀
 
-`gem install jekyll bundler`
+#### Installation
 
-Run `bundle install`
+- `npm i` in the root folder to install dependencies.
 
-## Run repo
+#### Development
 
-`bundle exec jekyll serve`
+- `npm run build:theme-dev` Create a non-purged dev version of `theme.css`
+- `npm run dev` Start a server with the dev version and hot-reloading
 
-## Launch
+#### Production
 
-Temp endpoint: https://blackpool-finance.github.io/BlackPool-ui/
+- `npm run build` Run typecheck, prettier, create a purged prod version of `theme.css`, build a prod version of the app.
+- `npm start` Start a server with the prod version.

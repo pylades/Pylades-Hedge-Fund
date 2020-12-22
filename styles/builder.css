@@ -1,0 +1,31 @@
+/* Start purging... */
+@tailwind base;
+/* Stop purging. */
+
+body {
+  @apply text-xs;
+  @apply font-mono;
+  @apply bg-black;
+  @apply text-gray-light;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold;
+}
+
+ul.dashed > li {
+  margin-left: 2.5px;
+}
+ul.dashed > li:before {
+  content: '—';
+  margin-right: 5px;
+}
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
