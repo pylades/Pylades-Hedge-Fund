@@ -1,7 +1,5 @@
 import { ManagerObject, ManagerInfo } from '../../types';
-
-// todo: Dynamically import Manager JSON from Github: https://github.com/BlackPool-Finance/managers/blob/main/verticals.json
-
+import axios from 'axios';
 // structure:
 // - Obj Keys are all vailable game verticals
 // - Managers are stored per vertical
@@ -21,13 +19,12 @@ export const managerObject: ManagerObject = {
         nickname: 'Maxmersch',
         verification: true,
       },
-      // {
-      //   address: '0x82d92b7bc6dff8775679e6a6c870db3231e6d925',
-      //   nickname: 'Example Manager',
-      //   verification: false,
-      // },
     ],
   },
+};
+
+export const managers = async () => {
+  return await axios.get('https://raw.githubusercontent.com/BlackPool-Finance/managers/main/verticals.json');
 };
 
 export const getManagersByGame = gameName => {
