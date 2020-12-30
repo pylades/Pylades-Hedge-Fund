@@ -1,45 +1,84 @@
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import { Page } from '../components';
-import { getManagersByGame, getAllGames, managerObject } from '../assets/data/managers';
+import { getAllGames, managerObject, getAllManagerAddresses, getAllContractAddresses } from '../assets/data/managers';
 import { getAssetsOfMultipleOwners } from '../services/openseaApi';
 import { ALink, OpenSeaAsset } from '../components';
 
 const Metrics = () => {
   const [allAssets, setAllAssets] = useState([]);
+  const [walletsInfo, setWalletsInfo] = useState({
+    allManagerAddresses: [],
+    allContractAddresses: [],
+    loaded: false,
+  });
   const [fetchInfo, setFetchInfo] = useState({
     offset: 0,
     limit: 24,
     steps: 24,
   });
   const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    loadAllAssets();
-  }, [fetchInfo.offset]);
 
-  const loadAllAssets = async () => {
-    setLoading(true);
-    const allManagerAddresses: Array<string> = getAllGames()
-      .map(gameKey => getManagersByGame(gameKey))
-      .flat()
-      .map(managerInfo => managerInfo.address);
-    const allAssets = await getAssetsOfMultipleOwners(allManagerAddresses, fetchInfo.offset, fetchInfo.limit);
-    setAllAssets(allAssets);
-    setLoading(false);
+  const { data, error } = useSWR(
+    walletsInfo.loaded ? ['allBlackpoolAssets', fetchInfo.offset] : null,
+    () =>
+      getAssetsOfMultipleOwners(
+        walletsInfo.allManagerAddresses,
+        walletsInfo.allContractAddresses,
+        fetchInfo.offset,
+        fetchInfo.limit
+      ),
+    {
+      onSuccess: () => {
+        setLoading(false);
+      },
+    }
+  );
+
+  // we add another fetch to already load the next page (and cache it). Read more here: https://swr.vercel.app/docs/pagination
+  useSWR(walletsInfo.loaded ? ['allBlackpoolAssets', fetchInfo.offset + fetchInfo.steps] : null, () =>
+    getAssetsOfMultipleOwners(
+      walletsInfo.allManagerAddresses,
+      walletsInfo.allContractAddresses,
+      fetchInfo.offset + fetchInfo.steps,
+      fetchInfo.limit
+    )
+  );
+
+  useEffect(() => {
+    loadWalletInfo();
+  }, []);
+
+  useEffect(() => {
+    data && setAllAssets(data);
+  }, data);
+
+  const loadWalletInfo = async () => {
+    // get NFT wallets of all managers of all games
+    const allManagerAddresses = getAllManagerAddresses();
+    // get NFT contract addresses of games where Blackpool is active
+    const allContractAddresses = getAllContractAddresses();
+    // set info to state for fetching
+    setWalletsInfo({
+      allManagerAddresses,
+      allContractAddresses,
+      loaded: true,
+    });
   };
 
-  const onNext = async () => {
+  const onNext = () => {
     const { offset, limit, steps } = fetchInfo;
-    await setFetchInfo({
+    setFetchInfo({
       offset: offset + steps,
       limit,
       steps,
     });
   };
 
-  const onPrev = async () => {
+  const onPrev = () => {
     const { offset, limit, steps } = fetchInfo;
     if (offset < steps) return;
-    await setFetchInfo({
+    setFetchInfo({
       offset: offset - steps,
       limit,
       steps,

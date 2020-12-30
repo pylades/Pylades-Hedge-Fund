@@ -5,11 +5,14 @@ export interface ManagerObject {
 export interface GameDetails {
   vertical: string;
   link: string;
+  nftContractAddress: string;
   managers: Array<ManagerInfo>;
 }
 
 export interface ManagerInfo {
-  address: string;
-  nickname: string;
-  verification: boolean;
+  username: string;
+  link: string;
+  cardWallet: string;
+  fundingAddress: string;
+  soraredata: string;
 }
