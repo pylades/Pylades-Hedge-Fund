@@ -16,10 +16,10 @@ const Metrics = () => {
         <h1>Blackpool AUM</h1>
         <div className='grid gap-1 mt-2'>
           <div>
-            <div className='font-bold'>
+            <div>
               <ALink href={managerObject['sorare'].link} text={'sorare'.toUpperCase()} />
             </div>
-            <div className='ml-2'>
+            <div className='m-2'>
               {sorareDataManagerArray.map((managerInfo: SorareDataManagerInfo) => (
                 <div className='grid grid-cols-2 gap-1'>
                   <div>
