@@ -16,3 +16,8 @@ export interface ManagerInfo {
   fundingAddress: string;
   soraredata: string;
 }
+export interface SorareDataManagerInfo {
+  manager: string;
+  totalValue: number;
+  sorareDataLink: string;
+}

@@ -15,5 +15,5 @@ const fetch = async url => {
 };
 
 export const getManagerValueList = async () => {
-  return await fetch(`${BASEURL}/blackpool/value`);
+  return await fetch(`https://soraredata-api-5nrclfsm3a-ew.a.run.app/blackpool/value`);
 };
