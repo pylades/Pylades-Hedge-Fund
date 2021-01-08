@@ -3,12 +3,17 @@ import { ALink, OpenSeaAsset } from '../components';
 import { useManagerInfo } from '../hooks/useManagerInfo';
 import { useSoraredata } from '../hooks/useSoraredata';
 import { useNFTGallery } from '../hooks/useNFTGallery';
-import { SorareDataManagerInfo } from '../types';
+import { SorareDataManagerInfo, ManagerInfo } from '../types';
 
 const Metrics = () => {
   const { sorareAUM, sorareDataManagerArray } = useSoraredata();
   const { allAssets, isLoading, fetchInfo, onNext, onPrev } = useNFTGallery();
   const { allGames, managerObject } = useManagerInfo();
+
+  const sorareManagerInfo = managerObject['sorare'];
+
+  const findManagerByName = (managerName: string): ManagerInfo =>
+    sorareManagerInfo.managers.find(managerInfo => managerInfo.username.toLowerCase() === managerName.toLowerCase());
 
   return (
     <Page title='Metrics'>
@@ -17,13 +22,13 @@ const Metrics = () => {
         <div className='grid gap-1 mt-2'>
           <div>
             <div>
-              <ALink href={managerObject['sorare'].link} text={'sorare'.toUpperCase()} />
+              <ALink href={sorareManagerInfo.link} text={'sorare'.toUpperCase()} />
             </div>
             <div className='m-2'>
-              {sorareDataManagerArray.map((managerInfo: SorareDataManagerInfo) => (
-                <div className='grid grid-cols-2 gap-1'>
+              {sorareDataManagerArray.map((managerInfo: SorareDataManagerInfo, index) => (
+                <div className='grid grid-cols-2 gap-1' key={index}>
                   <div>
-                    <ALink href={managerInfo.sorareDataLink} text={managerInfo.manager} />
+                    <ALink href={managerInfo.sorareDataLink} text={findManagerByName(managerInfo.manager).manager} />
                   </div>
                   <div className='justify-self-end'>{managerInfo.totalValue.toLocaleString()} Ξ</div>
                 </div>

@@ -12,6 +12,7 @@ export interface GameDetails {
 export interface ManagerInfo {
   username: string;
   link: string;
+  manager: string;
   cardWallet: string;
   fundingAddress: string;
   soraredata: string;
