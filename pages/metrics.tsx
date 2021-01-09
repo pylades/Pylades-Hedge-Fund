@@ -21,8 +21,11 @@ const Metrics = () => {
         <h1>Blackpool AUM</h1>
         <div className='grid gap-1 mt-2'>
           <div>
-            <div>
+            <div className='flex justify-between'>
               <ALink href={sorareManagerInfo.link} text={'sorare'.toUpperCase()} />
+              <small className='opacity-75'>
+                Data by <ALink href='https://www.soraredata.com/' text={'SorareData'.toUpperCase()} />
+              </small>
             </div>
             <div className='m-2'>
               {sorareDataManagerArray.map((managerInfo: SorareDataManagerInfo, index) => (
