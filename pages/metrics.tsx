@@ -8,7 +8,7 @@ import { SorareDataManagerInfo, ManagerInfo } from '../types';
 const Metrics = () => {
   const { sorareAUM, sorareDataManagerArray } = useSoraredata();
   const { allAssets, isLoading, fetchInfo, onNext, onPrev } = useNFTGallery();
-  const { allGames, managerObject } = useManagerInfo();
+  const { managerObject } = useManagerInfo();
 
   const sorareManagerInfo = managerObject['sorare'];
 
@@ -21,12 +21,7 @@ const Metrics = () => {
         <h1>Blackpool AUM</h1>
         <div className='grid gap-1 mt-2'>
           <div>
-            <div className='flex justify-between'>
-              <ALink href={sorareManagerInfo.link} text={'sorare'.toUpperCase()} />
-              <small className='opacity-75'>
-                Data by <ALink href='https://www.soraredata.com/' text={'SorareData'.toUpperCase()} />
-              </small>
-            </div>
+            <ALink href={sorareManagerInfo.link} text={'sorare'.toUpperCase()} />
             <div className='m-2'>
               {sorareDataManagerArray.map((managerInfo: SorareDataManagerInfo, index) => (
                 <div className='grid grid-cols-2 gap-1' key={index}>

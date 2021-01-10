@@ -5,6 +5,7 @@ const Navbar = () => (
     <RLink text='/' href='/' />
     <RLink text='metrics' href='/metrics' />
     <RLink text='memorandum' href='/memorandum' />
+    <RLink text='partners' href='/partners' />
     <RLink text='about' href='/about' />
   </nav>
 );
