@@ -5,6 +5,7 @@
     "nftContractAddress": "0x629a673a8242c2ac4b7b8c5d8735fbeac21a6205",
     "managers": [
       {
+        "manager": "Manager 1",
         "username": "adotjdot",
         "link": "https://sorare.com/gallery/adotjdot",
         "cardWallet": "0x4dc7f5f869ef49b9329ebb6e9defab509ff48a64",
@@ -12,6 +13,7 @@
         "sorareData": "https://www.soraredata.com/manager/adotjdot"
       },
       {
+        "manager": "Manager 2",
         "username": "Maxmersch",
         "link": "https://sorare.com/gallery/Maxmersch",
         "cardWallet": "0x39746cd028f15e5a32e110468641287969f97f09",
