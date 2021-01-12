@@ -35,11 +35,11 @@ export const getAssetsOfMultipleOwners = async (
   limit = 50,
   sortBy
 ): Promise<Array<OpenSeaAssetDetails>> => {
-  const ownersString = ownerAddresses.join('&owner=');
+  const ownersString = ownerAddresses.join('&owners=');
   const nftsString = allContractAddresses.join('&asset_contract_addresses=');
   const res =
     (await fetch(
-      `${BASEURL}/assets?order_by=${sortBy}&owner=${ownersString}&asset_contract_addresses=${nftsString}&order_direction=desc&offset=${offset}&limit=${limit}`
+      `${BASEURL}/assets?order_by=${sortBy}&owners=${ownersString}&asset_contract_addresses=${nftsString}&order_direction=desc&offset=${offset}&limit=${limit}`
     )) || {};
   return res.assets || [];
 };
