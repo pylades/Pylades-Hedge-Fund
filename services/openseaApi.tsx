@@ -18,10 +18,13 @@ const fetch = async url => {
 export const getAssetsOfSingleOwner = async (
   ownerAddress: string,
   offset = 0,
-  limit = 50
+  limit = 50,
+  sortBy = 'sale_price'
 ): Promise<Array<OpenSeaAssetDetails>> => {
   const res =
-    (await fetch(`${BASEURL}/assets?owner=${ownerAddress}&order_direction=desc&offset=${offset}&limit=${limit}`)) || {};
+    (await fetch(
+      `${BASEURL}/assets?order_by=${sortBy}&owner=${ownerAddress}&order_direction=desc&offset=${offset}&limit=${limit}`
+    )) || {};
   return res.assets || [];
 };
 
@@ -29,13 +32,14 @@ export const getAssetsOfMultipleOwners = async (
   ownerAddresses: Array<string>,
   allContractAddresses: Array<string>,
   offset = 0,
-  limit = 50
+  limit = 50,
+  sortBy
 ): Promise<Array<OpenSeaAssetDetails>> => {
-  const ownersString = ownerAddresses.join('&owner=');
+  const ownersString = ownerAddresses.join('&owners=');
   const nftsString = allContractAddresses.join('&asset_contract_addresses=');
   const res =
     (await fetch(
-      `${BASEURL}/assets?order_by=sale_price&owner=${ownersString}&asset_contract_addresses=${nftsString}&order_direction=desc&offset=${offset}&limit=${limit}`
+      `${BASEURL}/assets?order_by=${sortBy}&owners=${ownersString}&asset_contract_addresses=${nftsString}&order_direction=desc&offset=${offset}&limit=${limit}`
     )) || {};
   return res.assets || [];
 };
