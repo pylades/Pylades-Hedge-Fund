@@ -41,7 +41,7 @@ const Metrics = () => {
         </div>
         <br />
         <h1>All Assets</h1>
-        <div className='flex justify-space-between'>
+        <div className='grid grid-cols-3 gap-4'>
           {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}
           {renderSortButtons({ sortOptions, setSelectedOption, fetchInfo })}
         </div>
@@ -75,7 +75,8 @@ const renderAssets = ({ isLoading, allAssets }) => {
 const renderPagination = ({ assetCount, fetchInfo, onPrev, onNext }) => {
   const currentPage = fetchInfo.offset / fetchInfo.steps + 1;
 
-  if (assetCount < fetchInfo.steps && currentPage === 1) return null;
+  // return empty div to not mess up the grid view
+  if (assetCount < fetchInfo.steps && currentPage === 1) return <div></div>;
 
   return (
     <div className='py-2 inline-flex'>
@@ -87,24 +88,26 @@ const renderPagination = ({ assetCount, fetchInfo, onPrev, onNext }) => {
 };
 
 const renderSortButtons = ({ setSelectedOption, sortOptions, fetchInfo }) => {
-  const colourStyles = {
-    control: styles => ({ ...styles, backgroundColor: 'black', color: 'white' }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-      return {
-        ...styles,
-        backgroundColor: 'black',
-        borderColor: 'black',
-      };
-    },
-    singleValue: styles => ({ ...styles, color: 'white' }),
+  const colorStyles = {
+    control: styles => ({
+      ...styles,
+      backgroundColor: 'none',
+      padding: 0,
+      boxShadow: 'none',
+      border: 'none',
+      cursor: 'pointer',
+    }),
+    option: styles => ({ ...styles, backgroundColor: 'black', borderColor: 'black' }),
+    valueContainer: styles => ({ ...styles, padding: 0, justifyContent: 'flex-end' }),
+    singleValue: styles => ({ ...styles, color: 'white', border: 'none', padding: 0, marginRight: '1rem' }),
     menu: styles => ({ ...styles, backgroundColor: 'black', color: 'white' }),
   };
 
   return (
-    <div className='ml-auto max-w-sm w-56'>
+    <div className='ml-auto max-w-sm w-full col-span-2'>
       <Select
         instanceId={'select-order'}
-        styles={colourStyles}
+        styles={colorStyles}
         defaultValue={fetchInfo.selectedOption}
         onChange={setSelectedOption}
         options={sortOptions}
