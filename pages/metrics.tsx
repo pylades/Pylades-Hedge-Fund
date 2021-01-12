@@ -1,99 +1,43 @@
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
 import { Page } from '../components';
-import { getAllGames, managerObject, getAllManagerAddresses, getAllContractAddresses } from '../assets/data/managers';
-import { getAssetsOfMultipleOwners } from '../services/openseaApi';
 import { ALink, OpenSeaAsset } from '../components';
+import { useManagerInfo } from '../hooks/useManagerInfo';
+import { useSoraredata } from '../hooks/useSoraredata';
+import { useNFTGallery } from '../hooks/useNFTGallery';
+import { SorareDataManagerInfo, ManagerInfo } from '../types';
 
 const Metrics = () => {
-  const [allAssets, setAllAssets] = useState([]);
-  const [walletsInfo, setWalletsInfo] = useState({
-    allManagerAddresses: [],
-    allContractAddresses: [],
-    loaded: false,
-  });
-  const [fetchInfo, setFetchInfo] = useState({
-    offset: 0,
-    limit: 24,
-    steps: 24,
-  });
-  const [isLoading, setLoading] = useState(true);
+  const { sorareAUM, sorareDataManagerArray } = useSoraredata();
+  const { allAssets, isLoading, fetchInfo, onNext, onPrev } = useNFTGallery();
+  const { managerObject } = useManagerInfo();
 
-  const { data, error } = useSWR(
-    walletsInfo.loaded ? ['allBlackpoolAssets', fetchInfo.offset] : null,
-    () =>
-      getAssetsOfMultipleOwners(
-        walletsInfo.allManagerAddresses,
-        walletsInfo.allContractAddresses,
-        fetchInfo.offset,
-        fetchInfo.limit
-      ),
-    {
-      onSuccess: () => {
-        setLoading(false);
-      },
-    }
-  );
+  const sorareManagerInfo = managerObject['sorare'];
 
-  // we add another fetch to already load the next page (and cache it). Read more here: https://swr.vercel.app/docs/pagination
-  useSWR(walletsInfo.loaded ? ['allBlackpoolAssets', fetchInfo.offset + fetchInfo.steps] : null, () =>
-    getAssetsOfMultipleOwners(
-      walletsInfo.allManagerAddresses,
-      walletsInfo.allContractAddresses,
-      fetchInfo.offset + fetchInfo.steps,
-      fetchInfo.limit
-    )
-  );
-
-  useEffect(() => {
-    loadWalletInfo();
-  }, []);
-
-  useEffect(() => {
-    data && setAllAssets(data);
-  }, data);
-
-  const loadWalletInfo = async () => {
-    // get NFT wallets of all managers of all games
-    const allManagerAddresses = getAllManagerAddresses();
-    // get NFT contract addresses of games where Blackpool is active
-    const allContractAddresses = getAllContractAddresses();
-    // set info to state for fetching
-    setWalletsInfo({
-      allManagerAddresses,
-      allContractAddresses,
-      loaded: true,
-    });
-  };
-
-  const onNext = () => {
-    const { offset, limit, steps } = fetchInfo;
-    setFetchInfo({
-      offset: offset + steps,
-      limit,
-      steps,
-    });
-  };
-
-  const onPrev = () => {
-    const { offset, limit, steps } = fetchInfo;
-    if (offset < steps) return;
-    setFetchInfo({
-      offset: offset - steps,
-      limit,
-      steps,
-    });
-  };
+  const findManagerByName = (managerName: string): ManagerInfo =>
+    sorareManagerInfo.managers.find(managerInfo => managerInfo.username.toLowerCase() === managerName.toLowerCase());
 
   return (
     <Page title='Metrics'>
       <>
-        <h1>Current Games</h1>
-        {getAllGames().map(game => (
-          <div key={game}>
-            <ALink href={managerObject[game].link} text={game.toUpperCase()} />
+        <h1>Blackpool AUM</h1>
+        <div className='grid gap-1 mt-2'>
+          <div>
+            <ALink href={sorareManagerInfo.link} text={'sorare'.toUpperCase()} />
+            <div className='m-2'>
+              {sorareDataManagerArray.map((managerInfo: SorareDataManagerInfo, index) => (
+                <div className='grid grid-cols-2 gap-1' key={index}>
+                  <div>
+                    <ALink href={managerInfo.sorareDataLink} text={findManagerByName(managerInfo.manager).manager} />
+                  </div>
+                  <div className='justify-self-end'>{managerInfo.totalValue.toLocaleString()} Ξ</div>
+                </div>
+              ))}
+              <div className='grid grid-cols-2 gap-1 border-t mt-1 pt-1'>
+                <div>Total AUM</div>
+                <div className='justify-self-end'>{sorareAUM ? `${sorareAUM.toLocaleString()} Ξ` : 'loading...'}</div>
+              </div>
+            </div>
           </div>
-        ))}
+        </div>
         <br />
         <h1>All Assets</h1>
         {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}

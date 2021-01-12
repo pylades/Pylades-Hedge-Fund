@@ -35,7 +35,7 @@ export const getAssetsOfMultipleOwners = async (
   const nftsString = allContractAddresses.join('&asset_contract_addresses=');
   const res =
     (await fetch(
-      `${BASEURL}/assets?owner=${ownersString}&asset_contract_addresses=${nftsString}&order_direction=desc&offset=${offset}&limit=${limit}`
+      `${BASEURL}/assets?order_by=sale_price&owner=${ownersString}&asset_contract_addresses=${nftsString}&order_direction=desc&offset=${offset}&limit=${limit}`
     )) || {};
   return res.assets || [];
 };
