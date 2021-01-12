@@ -4,6 +4,10 @@ import { getAssetsOfMultipleOwners } from '../services/openseaApi';
 import { useManagerInfo } from './useManagerInfo';
 
 export const useNFTGallery = () => {
+  const SORT_OPTIONS = [
+    { value: 'sale_price', label: 'Highest Acquisition' },
+    { value: 'sale_date', label: 'Recently Acquired' },
+  ];
   const { allManagerAddresses, allContractAddresses } = useManagerInfo();
   const [allAssets, setAllAssets] = useState([]);
   const [walletsInfo, setWalletsInfo] = useState({
@@ -12,6 +16,7 @@ export const useNFTGallery = () => {
     loaded: false,
   });
   const [fetchInfo, setFetchInfo] = useState({
+    selectedOption: SORT_OPTIONS[0],
     offset: 0,
     limit: 24,
     steps: 24,
@@ -19,13 +24,14 @@ export const useNFTGallery = () => {
   const [isLoading, setLoading] = useState(true);
 
   const { data: NFTList, error } = useSWR(
-    walletsInfo.loaded ? ['blackpoolManagerNfts', fetchInfo.offset] : null,
+    walletsInfo.loaded ? ['blackpoolManagerNfts', fetchInfo.offset, fetchInfo.selectedOption] : null,
     () =>
       getAssetsOfMultipleOwners(
         walletsInfo.allManagerAddresses,
         walletsInfo.allContractAddresses,
         fetchInfo.offset,
-        fetchInfo.limit
+        fetchInfo.limit,
+        fetchInfo.selectedOption.value
       ),
     {
       onSuccess: () => {
@@ -40,7 +46,8 @@ export const useNFTGallery = () => {
       walletsInfo.allManagerAddresses,
       walletsInfo.allContractAddresses,
       fetchInfo.offset + fetchInfo.steps,
-      fetchInfo.limit
+      fetchInfo.limit,
+      fetchInfo.selectedOption.value
     )
   );
 
@@ -62,8 +69,9 @@ export const useNFTGallery = () => {
   };
 
   const onNext = () => {
-    const { offset, limit, steps } = fetchInfo;
+    const { offset, limit, steps, selectedOption } = fetchInfo;
     setFetchInfo({
+      selectedOption: selectedOption,
       offset: offset + steps,
       limit,
       steps,
@@ -71,10 +79,21 @@ export const useNFTGallery = () => {
   };
 
   const onPrev = () => {
-    const { offset, limit, steps } = fetchInfo;
+    const { offset, limit, steps, selectedOption } = fetchInfo;
     if (offset < steps) return;
     setFetchInfo({
+      selectedOption: selectedOption,
       offset: offset - steps,
+      limit,
+      steps,
+    });
+  };
+
+  const setSelectedOption = option => {
+    const { limit, steps } = fetchInfo;
+    setFetchInfo({
+      selectedOption: option,
+      offset: 0,
       limit,
       steps,
     });
@@ -85,6 +104,8 @@ export const useNFTGallery = () => {
     isLoading,
     NFTList,
     fetchInfo,
+    sortOptions: SORT_OPTIONS,
+    setSelectedOption,
     onNext,
     onPrev,
   };

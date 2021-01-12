@@ -1,3 +1,4 @@
+import Select from 'react-select';
 import { Page } from '../components';
 import { ALink, OpenSeaAsset } from '../components';
 import { useManagerInfo } from '../hooks/useManagerInfo';
@@ -7,7 +8,7 @@ import { SorareDataManagerInfo, ManagerInfo } from '../types';
 
 const Metrics = () => {
   const { sorareAUM, sorareDataManagerArray } = useSoraredata();
-  const { allAssets, isLoading, fetchInfo, onNext, onPrev } = useNFTGallery();
+  const { allAssets, isLoading, fetchInfo, onNext, onPrev, setSelectedOption, sortOptions } = useNFTGallery();
   const { managerObject } = useManagerInfo();
 
   const sorareManagerInfo = managerObject['sorare'];
@@ -40,7 +41,10 @@ const Metrics = () => {
         </div>
         <br />
         <h1>All Assets</h1>
-        {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}
+        <div className='flex justify-space-between'>
+          {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}
+          {renderSortButtons({ sortOptions, setSelectedOption, fetchInfo })}
+        </div>
         {renderAssets({ isLoading, allAssets })}
       </>
     </Page>
@@ -74,10 +78,37 @@ const renderPagination = ({ assetCount, fetchInfo, onPrev, onNext }) => {
   if (assetCount < fetchInfo.steps && currentPage === 1) return null;
 
   return (
-    <div className='py-2'>
+    <div className='py-2 inline-flex'>
       {currentPage > 1 && <button onClick={onPrev}>⬅️</button>}
-      <small className='p-1'>Page {currentPage}</small>
+      <p className='p-1'>Page {currentPage}</p>
       {assetCount === fetchInfo.steps && <button onClick={onNext}>➡️</button>}
+    </div>
+  );
+};
+
+const renderSortButtons = ({ setSelectedOption, sortOptions, fetchInfo }) => {
+  const colourStyles = {
+    control: styles => ({ ...styles, backgroundColor: 'black', color: 'white' }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      return {
+        ...styles,
+        backgroundColor: 'black',
+        borderColor: 'black',
+      };
+    },
+    singleValue: styles => ({ ...styles, color: 'white' }),
+    menu: styles => ({ ...styles, backgroundColor: 'black', color: 'white' }),
+  };
+
+  return (
+    <div className='ml-auto max-w-sm w-56'>
+      <Select
+        instanceId={'select-order'}
+        styles={colourStyles}
+        defaultValue={fetchInfo.selectedOption}
+        onChange={setSelectedOption}
+        options={sortOptions}
+      />
     </div>
   );
 };
