@@ -80,9 +80,9 @@ const renderPagination = ({ assetCount, fetchInfo, onPrev, onNext }) => {
 
   return (
     <div className='py-2 inline-flex'>
-      {currentPage > 1 && <button onClick={onPrev}>⬅️</button>}
+      {currentPage > 1 && <button onClick={onPrev} className="focus:outline-none">⬅️</button>}
       <p className='p-1'>Page {currentPage}</p>
-      {assetCount === fetchInfo.steps && <button onClick={onNext}>➡️</button>}
+      {assetCount === fetchInfo.steps && <button onClick={onNext} className="focus:outline-none">➡️</button>}
     </div>
   );
 };
