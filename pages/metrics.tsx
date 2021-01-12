@@ -1,3 +1,4 @@
+import Select from 'react-select';
 import { Page } from '../components';
 import { ALink, OpenSeaAsset } from '../components';
 import { useManagerInfo } from '../hooks/useManagerInfo';
@@ -7,7 +8,7 @@ import { SorareDataManagerInfo, ManagerInfo } from '../types';
 
 const Metrics = () => {
   const { sorareAUM, sorareDataManagerArray } = useSoraredata();
-  const { allAssets, isLoading, fetchInfo, onNext, onPrev } = useNFTGallery();
+  const { allAssets, isLoading, fetchInfo, onNext, onPrev, setSelectedOption, sortOptions } = useNFTGallery();
   const { managerObject } = useManagerInfo();
 
   const sorareManagerInfo = managerObject['sorare'];
@@ -40,7 +41,10 @@ const Metrics = () => {
         </div>
         <br />
         <h1>All Assets</h1>
-        {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}
+        <div className='grid grid-cols-3 gap-4'>
+          {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}
+          {renderSortButtons({ sortOptions, setSelectedOption, fetchInfo })}
+        </div>
         {renderAssets({ isLoading, allAssets })}
       </>
     </Page>
@@ -71,13 +75,43 @@ const renderAssets = ({ isLoading, allAssets }) => {
 const renderPagination = ({ assetCount, fetchInfo, onPrev, onNext }) => {
   const currentPage = fetchInfo.offset / fetchInfo.steps + 1;
 
-  if (assetCount < fetchInfo.steps && currentPage === 1) return null;
+  // return empty div to not mess up the grid view
+  if (assetCount < fetchInfo.steps && currentPage === 1) return <div></div>;
 
   return (
-    <div className='py-2'>
-      {currentPage > 1 && <button onClick={onPrev}>⬅️</button>}
-      <small className='p-1'>Page {currentPage}</small>
-      {assetCount === fetchInfo.steps && <button onClick={onNext}>➡️</button>}
+    <div className='py-2 inline-flex'>
+      {currentPage > 1 && <button onClick={onPrev} className="focus:outline-none">⬅️</button>}
+      <p className='p-1'>Page {currentPage}</p>
+      {assetCount === fetchInfo.steps && <button onClick={onNext} className="focus:outline-none">➡️</button>}
+    </div>
+  );
+};
+
+const renderSortButtons = ({ setSelectedOption, sortOptions, fetchInfo }) => {
+  const colorStyles = {
+    control: styles => ({
+      ...styles,
+      backgroundColor: 'none',
+      padding: 0,
+      boxShadow: 'none',
+      border: 'none',
+      cursor: 'pointer',
+    }),
+    option: styles => ({ ...styles, backgroundColor: 'black', borderColor: 'black' }),
+    valueContainer: styles => ({ ...styles, padding: 0, justifyContent: 'flex-end' }),
+    singleValue: styles => ({ ...styles, color: 'white', border: 'none', padding: 0, marginRight: '1rem' }),
+    menu: styles => ({ ...styles, backgroundColor: 'black', color: 'white' }),
+  };
+
+  return (
+    <div className='ml-auto max-w-sm w-full col-span-2'>
+      <Select
+        instanceId={'select-order'}
+        styles={colorStyles}
+        defaultValue={fetchInfo.selectedOption}
+        onChange={setSelectedOption}
+        options={sortOptions}
+      />
     </div>
   );
 };
