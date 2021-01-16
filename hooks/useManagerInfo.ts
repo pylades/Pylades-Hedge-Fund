@@ -21,11 +21,18 @@ export const useManagerInfo = () => {
   // NFT contract addresses of games where Blackpool is active
   const allContractAddresses: Array<string> = allGames.map(gameKey => managerObject[gameKey].nftContractAddress);
 
+  // Just SORARE for now, need improvement later
+  const managerOptions = managerObject.sorare.managers.map(manager => ({
+    value: manager.cardWallet,
+    label: manager.manager,
+  }));
+
   return {
     managerObject,
     getManagersByGame,
     allGames,
     allManagerAddresses,
     allContractAddresses,
+    managerOptions,
   };
 };
