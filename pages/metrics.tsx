@@ -8,7 +8,17 @@ import { SorareDataManagerInfo, ManagerInfo } from '../types';
 
 const Metrics = () => {
   const { sorareAUM, sorareDataManagerArray } = useSoraredata();
-  const { allAssets, isLoading, fetchInfo, onNext, onPrev, setSelectedOption, sortOptions } = useNFTGallery();
+  const {
+    allAssets,
+    isLoading,
+    fetchInfo,
+    onNext,
+    onPrev,
+    setSelectedOption,
+    sortOptions,
+    managerOptions,
+    setManagerOption,
+  } = useNFTGallery();
   const { managerObject } = useManagerInfo();
 
   const sorareManagerInfo = managerObject['sorare'];
@@ -40,11 +50,11 @@ const Metrics = () => {
           </div>
         </div>
         <br />
-        <h1>All Assets</h1>
-        <div className='grid grid-cols-3 gap-4'>
+        <div className='flex justify-between items-center'>
+          <h1>Blackpool Assets</h1>
           {renderPagination({ assetCount: allAssets.length, fetchInfo, onPrev, onNext })}
-          {renderSortButtons({ sortOptions, setSelectedOption, fetchInfo })}
         </div>
+        {optionButtons({ sortOptions, setSelectedOption, fetchInfo, managerOptions, setManagerOption })}
         {renderAssets({ isLoading, allAssets })}
       </>
     </Page>
@@ -79,16 +89,38 @@ const renderPagination = ({ assetCount, fetchInfo, onPrev, onNext }) => {
   if (assetCount < fetchInfo.steps && currentPage === 1) return <div></div>;
 
   return (
-    <div className='py-2 inline-flex'>
-      {currentPage > 1 && <button onClick={onPrev} className="focus:outline-none">⬅️</button>}
+    <div className='inline-flex'>
+      {currentPage > 1 && (
+        <button onClick={onPrev} className='focus:outline-none'>
+          <svg className='h-2' width='16px' height='16px' viewBox='0 0 124 124' version='1.1'>
+            <g id='Artboard' transform='translate(-12.000000, -6.000000)' fill='#FFFFFF'>
+              <path
+                d='M76.9442719,17.8885438 L128.763932,121.527864 C131.233825,126.467649 129.231581,132.474379 124.291796,134.944272 C122.903242,135.638549 121.372111,136 119.81966,136 L16.1803399,136 C10.6574924,136 6.18033989,131.522847 6.18033989,126 C6.18033989,124.447549 6.54179081,122.916418 7.23606798,121.527864 L59.0557281,17.8885438 C61.5256206,12.9487588 67.532351,10.9465154 72.472136,13.4164079 C74.40741,14.3840449 75.9766349,15.9532698 76.9442719,17.8885438 Z'
+                id='Triangle'
+                transform='translate(68.000000, 68.000000) scale(-1, 1) rotate(90.000000) translate(-68.000000, -68.000000) '></path>
+            </g>
+          </svg>
+        </button>
+      )}
       <p className='p-1'>Page {currentPage}</p>
-      {assetCount === fetchInfo.steps && <button onClick={onNext} className="focus:outline-none">➡️</button>}
+      {assetCount === fetchInfo.steps && (
+        <button onClick={onNext} className='focus:outline-none'>
+          <svg className='h-2' width='16px' height='16px' viewBox='0 0 124 124' version='1.1'>
+            <g id='Artboard' transform='translate(0.000000, -6.000000)' fill='#FFFFFF'>
+              <path
+                d='M76.9442719,17.8885438 L128.763932,121.527864 C131.233825,126.467649 129.231581,132.474379 124.291796,134.944272 C122.903242,135.638549 121.372111,136 119.81966,136 L16.1803399,136 C10.6574924,136 6.18033989,131.522847 6.18033989,126 C6.18033989,124.447549 6.54179081,122.916418 7.23606798,121.527864 L59.0557281,17.8885438 C61.5256206,12.9487588 67.532351,10.9465154 72.472136,13.4164079 C74.40741,14.3840449 75.9766349,15.9532698 76.9442719,17.8885438 Z'
+                id='Triangle'
+                transform='translate(68.000000, 68.000000) rotate(90.000000) translate(-68.000000, -68.000000)'></path>
+            </g>
+          </svg>
+        </button>
+      )}
     </div>
   );
 };
 
-const renderSortButtons = ({ setSelectedOption, sortOptions, fetchInfo }) => {
-  const colorStyles = {
+const optionButtons = ({ setSelectedOption, sortOptions, fetchInfo, managerOptions, setManagerOption }) => {
+  const colorStylesOrder = {
     control: styles => ({
       ...styles,
       backgroundColor: 'none',
@@ -98,20 +130,36 @@ const renderSortButtons = ({ setSelectedOption, sortOptions, fetchInfo }) => {
       cursor: 'pointer',
     }),
     option: styles => ({ ...styles, backgroundColor: 'black', borderColor: 'black' }),
-    valueContainer: styles => ({ ...styles, padding: 0, justifyContent: 'flex-end' }),
+    valueContainer: styles => ({ ...styles, padding: 0, justifyContent: 'flex-end', fontSize: '0.72rem' }),
     singleValue: styles => ({ ...styles, color: 'white', border: 'none', padding: 0, marginRight: '1rem' }),
     menu: styles => ({ ...styles, backgroundColor: 'black', color: 'white' }),
   };
 
+  const colorStylesManager = {
+    ...colorStylesOrder,
+    valueContainer: styles => ({ ...styles, padding: 0, justifyContent: 'flex-start', fontSize: '0.72rem' }),
+  };
+
   return (
-    <div className='ml-auto max-w-sm w-full col-span-2'>
-      <Select
-        instanceId={'select-order'}
-        styles={colorStyles}
-        defaultValue={fetchInfo.selectedOption}
-        onChange={setSelectedOption}
-        options={sortOptions}
-      />
+    <div className='grid grid-cols-10 grid-rows-1'>
+      <div className='max-w-sm col-start-1 col-end-5'>
+        <Select
+          instanceId={'select-manager'}
+          styles={colorStylesManager}
+          defaultValue={managerOptions[0]}
+          onChange={setManagerOption}
+          options={managerOptions}
+        />
+      </div>
+      <div className='max-w-sm col-start-5 col-end-11'>
+        <Select
+          instanceId={'select-order'}
+          styles={colorStylesOrder}
+          defaultValue={sortOptions[0]}
+          onChange={setSelectedOption}
+          options={sortOptions}
+        />
+      </div>
     </div>
   );
 };

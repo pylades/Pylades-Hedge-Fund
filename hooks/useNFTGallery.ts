@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import { getAssetsOfMultipleOwners } from '../services/openseaApi';
+import { getAssetsOfOwner } from '../services/openseaApi';
 import { useManagerInfo } from './useManagerInfo';
 
 export const useNFTGallery = () => {
@@ -8,7 +8,7 @@ export const useNFTGallery = () => {
     { value: 'sale_price', label: 'Highest Acquisition' },
     { value: 'sale_date', label: 'Recently Acquired' },
   ];
-  const { allManagerAddresses, allContractAddresses } = useManagerInfo();
+  const { allManagerAddresses, allContractAddresses, managerOptions } = useManagerInfo();
   const [allAssets, setAllAssets] = useState([]);
   const [walletsInfo, setWalletsInfo] = useState({
     allManagerAddresses: [],
@@ -16,7 +16,8 @@ export const useNFTGallery = () => {
     loaded: false,
   });
   const [fetchInfo, setFetchInfo] = useState({
-    selectedOption: SORT_OPTIONS[0],
+    selectedFilterOption: SORT_OPTIONS[0],
+    selectedManagerOption: managerOptions[0],
     offset: 0,
     limit: 24,
     steps: 24,
@@ -24,14 +25,16 @@ export const useNFTGallery = () => {
   const [isLoading, setLoading] = useState(true);
 
   const { data: NFTList, error } = useSWR(
-    walletsInfo.loaded ? ['blackpoolManagerNfts', fetchInfo.offset, fetchInfo.selectedOption] : null,
+    walletsInfo.loaded
+      ? [`blackpool${fetchInfo.selectedManagerOption.value}Nfts`, fetchInfo.offset, fetchInfo.selectedFilterOption]
+      : null,
     () =>
-      getAssetsOfMultipleOwners(
-        walletsInfo.allManagerAddresses,
+      getAssetsOfOwner(
+        fetchInfo.selectedManagerOption.value,
         walletsInfo.allContractAddresses,
         fetchInfo.offset,
         fetchInfo.limit,
-        fetchInfo.selectedOption.value
+        fetchInfo.selectedFilterOption.value
       ),
     {
       onSuccess: () => {
@@ -41,14 +44,22 @@ export const useNFTGallery = () => {
   );
 
   // we add another fetch to already load the next page (and cache it). Read more here: https://swr.vercel.app/docs/pagination
-  useSWR(walletsInfo.loaded ? ['blackpoolManagerNfts', fetchInfo.offset + fetchInfo.steps] : null, () =>
-    getAssetsOfMultipleOwners(
-      walletsInfo.allManagerAddresses,
-      walletsInfo.allContractAddresses,
-      fetchInfo.offset + fetchInfo.steps,
-      fetchInfo.limit,
-      fetchInfo.selectedOption.value
-    )
+  useSWR(
+    walletsInfo.loaded
+      ? [
+          `blackpool${fetchInfo.selectedManagerOption.value}Nfts`,
+          fetchInfo.offset + fetchInfo.steps,
+          fetchInfo.selectedFilterOption,
+        ]
+      : null,
+    () =>
+      getAssetsOfOwner(
+        fetchInfo.selectedManagerOption.value,
+        walletsInfo.allContractAddresses,
+        fetchInfo.offset + fetchInfo.steps,
+        fetchInfo.limit,
+        fetchInfo.selectedFilterOption.value
+      )
   );
 
   useEffect(() => {
@@ -69,9 +80,10 @@ export const useNFTGallery = () => {
   };
 
   const onNext = () => {
-    const { offset, limit, steps, selectedOption } = fetchInfo;
+    const { offset, limit, steps, selectedFilterOption, selectedManagerOption } = fetchInfo;
     setFetchInfo({
-      selectedOption: selectedOption,
+      selectedFilterOption,
+      selectedManagerOption,
       offset: offset + steps,
       limit,
       steps,
@@ -79,10 +91,11 @@ export const useNFTGallery = () => {
   };
 
   const onPrev = () => {
-    const { offset, limit, steps, selectedOption } = fetchInfo;
+    const { offset, limit, steps, selectedFilterOption, selectedManagerOption } = fetchInfo;
     if (offset < steps) return;
     setFetchInfo({
-      selectedOption: selectedOption,
+      selectedFilterOption,
+      selectedManagerOption,
       offset: offset - steps,
       limit,
       steps,
@@ -90,9 +103,25 @@ export const useNFTGallery = () => {
   };
 
   const setSelectedOption = option => {
-    const { limit, steps } = fetchInfo;
+    const { limit, steps, selectedManagerOption, selectedFilterOption } = fetchInfo;
+    if (option === selectedFilterOption) return;
+    setLoading(true);
     setFetchInfo({
-      selectedOption: option,
+      selectedFilterOption: option,
+      selectedManagerOption,
+      offset: 0,
+      limit,
+      steps,
+    });
+  };
+
+  const setManagerOption = option => {
+    const { limit, steps, selectedFilterOption, selectedManagerOption } = fetchInfo;
+    if (option === selectedManagerOption) return;
+    setLoading(true);
+    setFetchInfo({
+      selectedFilterOption,
+      selectedManagerOption: option,
       offset: 0,
       limit,
       steps,
@@ -106,6 +135,8 @@ export const useNFTGallery = () => {
     fetchInfo,
     sortOptions: SORT_OPTIONS,
     setSelectedOption,
+    managerOptions,
+    setManagerOption,
     onNext,
     onPrev,
   };
